@@ -40,7 +40,7 @@ class Field extends CompositeField
      * @param DataObject $owner
      * @param string     $dataClass
      */
-    public function __construct($name, $title, DataObject $owner, $dataClass = DataObject::class)
+    public function __construct($name, $title = ' ', DataObject $owner, $dataClass = DataObject::class)
     {
         // Create grid field
         $this->initGridField($name, $title, $owner, $dataClass);
@@ -48,7 +48,7 @@ class Field extends CompositeField
         $this->addExtraClass('b-hasoneselector-field');
 
         // Ensure there is a left label to allow for field to be aligned with others
-        $this->leftTitle = ' ';
+        $this->leftTitle = $title;
 
         // Create composite field with hidden field holds the value and grid field to find and select has one relation
         parent::__construct([
