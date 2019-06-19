@@ -113,7 +113,7 @@ class Field extends CompositeField
         }
         $this->gridField->setValueHolderField($this->getValueHolderField());
 
-        if ($owner->{$name}->exists()) {
+        if ($owner->{$name} && $owner->{$name}->exists()) {
             $this->removeLinkable();
             $this->removeAddable();
         }
