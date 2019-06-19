@@ -94,6 +94,7 @@ class GridField extends SSGridField
         parent::__construct($name, $title, $dataList, $config);
 
         $fields = $foo->getDisplayFields($this);
+        unset($fields['ID']);
         $foo->setDisplayFields(array_merge([
             'ID' => [
                 'callback' => function ($val) {
