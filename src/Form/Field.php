@@ -143,7 +143,7 @@ class Field extends CompositeField
     {
         // Use default linkable grid field component
         if (is_null($component)) {
-            $component = new GridFieldAddExistingAutocompleter('buttons-before-right');
+            $component = new GridFieldAddExistingAutocompleter('buttons-before-left');
         }
 
         // Add grid field component
@@ -179,7 +179,7 @@ class Field extends CompositeField
     {
         // Use default addable grid field component
         if (is_null($component)) {
-            $component = new GridFieldAddNewButton('buttons-before-left');
+            $component = new GridFieldAddNewButton('buttons-before-right');
         }
 
         // Add grid field component
