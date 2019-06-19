@@ -1,5 +1,5 @@
 .b-hasoneselector-field .grid-field {
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
 }
 
 .b-hasoneselector-field .grid-field__table {
@@ -10,4 +10,29 @@
 
 .b-hasoneselector-field .grid-field__table td {
     padding: 0.8rem;
+}
+
+.b-hasoneselector-field .grid-field .toolbar--content {
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
+.b-hasoneselector-field .grid-field .toolbar--content .add-existing-autocompleter {
+    width: 100%;
+    margin-right: 0.5rem;
+    display: flex;
+}
+
+.b-hasoneselector-field .grid-field .toolbar--content .add-existing-autocompleter:after {
+    content: "OR";
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.b-hasoneselector-field .grid-field .toolbar--content .add-existing-autocompleter span:first-child {
+    flex-grow: 2;
+}
+
+.b-hasoneselector-field .grid-field .toolbar--content .add-existing-autocompleter input {
+    width: 100%;
 }
