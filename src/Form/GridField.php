@@ -92,6 +92,15 @@ class GridField extends SSGridField
         $this->setEmptyString(sprintf('No %s selected', strtolower(singleton($dataClass)->singular_name())));
 
         parent::__construct($name, $title, $dataList, $config);
+
+        $fields = $foo->getDisplayFields($this);
+        $foo->setDisplayFields(array_merge([
+            'ID' => [
+                'callback' => function ($val) {
+                    return '#' . $val->ID;
+                }
+            ]
+        ], $fields));
     }
 
     /**
