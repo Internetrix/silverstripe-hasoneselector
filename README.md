@@ -52,6 +52,21 @@ class Page extends SiteTree
 }
 ```
 
+Alternatively, create an extension and apply it to all data objects.
+```php
+public function updateCMSFields(FieldList &$fields)
+    {
+        $hasOnes = Config::inst()->get($this->owner->ClassName, 'has_one');
+        foreach ($hasOnes as $fieldRelation => $fieldClass) {
+            $fieldName = $fieldRelation . 'ID';
+            if ($oldField = $fields->dataFieldByName($fieldName)) {
+                $fields->replaceField($fieldName,
+                    $newField = Moo\HasOneSelector\Form\Field::create($fieldRelation, $oldField->Title(), $this->owner, $fieldClass));
+            }
+        }
+    }
+```
+
 ## License
 
 This module is under the MIT license. View the [LICENSE](LICENSE.md) file for the full copyright and license information.
