@@ -35,10 +35,10 @@ class Field extends CompositeField
     /**
      * HasOneSelector Field constructor
      *
-     * @param string     $name
-     * @param string     $title
+     * @param string $name
+     * @param string $title
      * @param DataObject $owner
-     * @param string     $dataClass
+     * @param string $dataClass
      */
     public function __construct($name, $title = ' ', DataObject $owner, $dataClass = DataObject::class)
     {
@@ -64,11 +64,11 @@ class Field extends CompositeField
      *
      * The default field holder is a label and a form field inside a div.
      *
-     * @see FieldHolder.ss
-     *
      * @param array $properties
      *
      * @return DBHTMLText
+     * @see FieldHolder.ss
+     *
      */
     public function FieldHolder($properties = [])
     {
@@ -100,10 +100,10 @@ class Field extends CompositeField
     /**
      * Initiate instance of grid field. This is a subclass of GridField
      *
-     * @param  string     $name
-     * @param  string     $title
-     * @param  DataObject $owner
-     * @param  string     $dataClass
+     * @param string $name
+     * @param string $title
+     * @param DataObject $owner
+     * @param string $dataClass
      * @return GridField
      */
     protected function initGridField($name, $title, DataObject $owner, $dataClass = DataObject::class)
@@ -112,6 +112,11 @@ class Field extends CompositeField
             $this->gridField = GridField::create($name, $title, $owner, $dataClass);
         }
         $this->gridField->setValueHolderField($this->getValueHolderField());
+
+        if ($owner->{$name}->exists()) {
+            $this->removeLinkable();
+            $this->removeAddable();
+        }
 
         return $this->gridField;
     }
@@ -136,7 +141,7 @@ class Field extends CompositeField
     /**
      * Add linkable grid field component
      *
-     * @param  GridFieldComponent|null $component
+     * @param GridFieldComponent|null $component
      * @return $this
      */
     public function enableLinkable(GridFieldComponent $component = null)
@@ -172,7 +177,7 @@ class Field extends CompositeField
     /**
      * Add addable grid field component
      *
-     * @param  GridFieldComponent|null $component
+     * @param GridFieldComponent|null $component
      * @return $this
      */
     public function enableAddable(GridFieldComponent $component = null)
@@ -192,8 +197,8 @@ class Field extends CompositeField
      * Proxy any undefined methods to the grid field as this is the main field and the composite is wrapper to manage
      * the field and value of has one
      *
-     * @param  string    $method
-     * @param  array     $arguments
+     * @param string $method
+     * @param array $arguments
      * @return mixed
      * @throws Exception
      */
