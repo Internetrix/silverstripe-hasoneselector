@@ -16,6 +16,7 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\View\Requirements;
@@ -68,11 +69,12 @@ class GridField extends SSGridField
         // Initiate grid field configuration based on relation editor
         $config = new GridFieldConfig();
         $config->addComponent(new GridFieldButtonRow('before'));
-        $config->addComponent(new GridFieldAddNewButton('buttons-before-left'));
-        $config->addComponent(new GridFieldAddExistingAutocompleter('buttons-before-right'));
+        $config->addComponent(new GridFieldAddNewButton('buttons-before-right'));
+        $config->addComponent(new GridFieldAddExistingAutocompleter('buttons-before-left'));
         $config->addComponent(new GridFieldDataColumns());
         $config->addComponent(new GridFieldEditButton());
         $config->addComponent(new GridFieldDeleteAction(true));
+        $config->addComponent(new GridFieldDeleteAction(false));
         $config->addComponent(new GridField_ActionMenu());
         $config->addComponent(new GridFieldDetailForm());
 
@@ -266,6 +268,7 @@ class GridField extends SSGridField
 
         // If we have no items text in the body, then replace the text with customised string
         if (strpos($content['body'], $noItemsText) !== false) {
+            return null;
             $content['body'] = str_replace($noItemsText, $this->emptyString, $content['body']);
         }
 
