@@ -71,7 +71,7 @@ class GridField extends SSGridField
         $config->addComponent(new GridFieldButtonRow('before'));
         $config->addComponent(new GridFieldAddNewButton('buttons-before-right'));
         $config->addComponent(new GridFieldAddExistingAutocompleter('buttons-before-left'));
-        $config->addComponent(new GridFieldDataColumns());
+        $config->addComponent($cols = new GridFieldDataColumns());
         $config->addComponent(new GridFieldEditButton());
         $config->addComponent(new GridFieldDeleteAction(true));
         $config->addComponent(new GridFieldDeleteAction(false));
@@ -93,12 +93,12 @@ class GridField extends SSGridField
 
         parent::__construct($name, $title, $dataList, $config);
 
-        $fields = $foo->getDisplayFields($this);
+        $fields = $cols->getDisplayFields($this);
         unset($fields['ID']);
-        $foo->setDisplayFields(array_merge([
+        $cols->setDisplayFields(array_merge([
             'ID' => [
-                'callback' => function ($val) {
-                    return '#' . $val->ID;
+                'callback' => function ($obj) {
+                    return '#' . $obj->ID;
                 }
             ]
         ], $fields));
