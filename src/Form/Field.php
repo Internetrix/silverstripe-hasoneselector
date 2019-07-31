@@ -50,9 +50,8 @@ class Field extends CompositeField
         // Ensure there is a left label to allow for field to be aligned with others
         $this->leftTitle = $title;
 
-        // Create composite field with hidden field holds the value and grid field to find and select has one relation
+        // Create composite field, gridfield to find and select has one relation with hidden field holds the value
         parent::__construct([
-            $this->getValueHolderField(),
             $this->gridField,
         ]);
     }
