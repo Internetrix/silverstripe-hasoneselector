@@ -82,6 +82,8 @@ class GridField extends SSGridField
         $this->setDataClass($dataClass);
         // Set the owner data object that contains the has one relation
         $this->setOwner($owner);
+        // Set the name, for the relationship to be identifiable
+        $this->setName($name);
         // Load relation value from session
         $this->loadRelationFromSession();
 
@@ -93,6 +95,7 @@ class GridField extends SSGridField
 
         parent::__construct($name, $title, $dataList, $config);
 
+        // Force the ID field to be present, for usability
         $fields = $cols->getDisplayFields($this);
         unset($fields['ID']);
         $cols->setDisplayFields(array_merge([
@@ -278,8 +281,7 @@ class GridField extends SSGridField
 
         // If we have no items text in the body, then replace the text with customised string
         if (strpos($content['body'], $noItemsText) !== false) {
-            return null;
-            $content['body'] = str_replace($noItemsText, $this->emptyString, $content['body']);
+            $content['body'] = ''; // display no body.
         }
 
         // Append field to hold the value of has one relation
@@ -309,13 +311,13 @@ class GridField extends SSGridField
     {
         // Session name for current owner
         $sessionName = $this->getSessionName();
-
+        // Relation name, to support multiple relations
+        $relation = $this->getRelationName();
         // Store relation and owner in session
         $session = Controller::curr()->getRequest()->getSession();
-        $session->set($sessionName, [
-            'Relation'   => $this->getRelationName(),
-            'RelationID' => (int) $recordId,
-        ]);
+        $data = $session->get($sessionName);
+        $data[$relation] = (int)$recordId;
+        $session->set($sessionName, $data);
     }
 
     /**
@@ -325,16 +327,16 @@ class GridField extends SSGridField
     {
         // Session name for current owner
         $sessionName = $this->getSessionName();
-
+        // Relation name, to support multiple relations
+        $relation = $this->getRelationName();
         // Store relation value in session
         $session = Controller::curr()->getRequest()->getSession();
-        $data    = $session->get($sessionName);
-        if (!empty($data['Relation']) && !empty($data['RelationID'])) {
+        $data = $session->get($sessionName);
+        if (!empty($data[$relation])) {
             // Get owner object
             $owner = $this->getOwner();
-
             // Set relation value
-            $owner->{$data['Relation']} = $data['RelationID'];
+            $owner->$relation = $data[$relation];
         }
     }
 
