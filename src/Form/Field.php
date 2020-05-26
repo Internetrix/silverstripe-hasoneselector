@@ -54,6 +54,9 @@ class Field extends CompositeField
         parent::__construct([
             $this->gridField,
         ]);
+        
+        // Give this composite field a name to reference by
+        $this->setName($name);
     }
 
     /**
